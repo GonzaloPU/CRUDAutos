@@ -22,18 +22,14 @@ namespace CRUDAutosv.Controllers
         public async Task<IActionResult> Index(string Search, int anio)
 
         {
+            //Realizamos la condición para filtrar por Modelo, Marca y año
             var autos = from auto in _context.Autos select auto;
 
             if (!String.IsNullOrEmpty(Search))
             {
-                   autos = autos.Where(e => e.Marca!.Contains(Search) || e.Modelo!.Contains(Search));
+                   autos = autos.Where(e => e.Marca!.Contains(Search) || e.Modelo!.Contains(Search) || e.Anio.ToString().Contains(Search));
             }
-            if (anio != null)
-            {
-                autos = autos.Where(e => e.Anio!.Contains(anio));
-            }
-
-
+          
 
             return View(await autos.ToListAsync()); 
                         
